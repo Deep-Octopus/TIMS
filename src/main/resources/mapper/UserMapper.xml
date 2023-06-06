@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.tims.dao.UserDao">
+    <select id="getUserByUsername" resultType="map">
+        SELECT
+            'student' AS user_type, password
+        FROM
+            students
+        WHERE
+            id = #{username};
+
+        UNION
+
+        SELECT
+            'teacher' AS user_type, password
+        FROM
+            teachers
+        WHERE
+            id = #{username};
+    </select>
+
+    <select id="getTableConfig" resultType="string">
+        select config_value from table_config where table_target = #{target}
+    </select>
+
+</mapper>

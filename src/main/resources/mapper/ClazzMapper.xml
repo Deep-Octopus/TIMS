@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.tims.dao.ClazzDao">
+<!--    <select id="getClazzStudentCount" parameterType="string" resultType="int">-->
+<!--        select number_of_student from clazzs where id = #{clazzId}-->
+<!--    </select>-->
+
+<!--    <update id="setClazzStudentCount">-->
+<!--        update clazzs set number_of_student = #{count} where id = #{clazzId}-->
+<!--    </update>-->
+    <!--    暂时没有分页-->
+    <select id="getAllClazz" resultType="com.example.tims.entity.Clazz">
+        select * from clazzs
+    </select>
+
+    <insert id="add" parameterType="com.example.tims.entity.Clazz">
+        insert into clazzs (id, teacher_id, department)
+        values (#{id}, #{teacherId}, #{department})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        delete from clazzs where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.example.tims.entity.Clazz">
+        update students set teacher_id = #{teacherId},department = #{department}
+        where id = #{id}
+    </update>
+
+    <select id="getClazzByTeacher" resultType="com.example.tims.entity.Clazz">
+        select * from clazzs where teacher_id = #{teacherId}
+    </select>
+
+    <select id="accurateQuire" parameterType="map" resultType="com.example.tims.entity.Clazz">
+        select * from clazzs where #{fieldName} = #{value}
+    </select>
+
+    <select id="quire" parameterType="map" resultType="com.example.tims.entity.Clazz">
+        select * from clazzs where #{fieldName} LIKE %#{value}%
+    </select>
+
+<!--    for table config save-->
+    <insert id="saveTableConfig">
+        insert into table_config(table_target, config_value)
+        values (#{tableTarget}, #{configValue})
+    </insert>
+
+    <select id="getTableConfig" resultType="string">
+        select config_value from table_config where table_target = #{tableTarget}
+    </select>
+</mapper>

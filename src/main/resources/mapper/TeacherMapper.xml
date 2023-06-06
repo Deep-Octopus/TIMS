@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.tims.dao.TeacherDao">
+    <select id="getPwd" resultType="string">
+        select password from teachers where id=#{id}
+    </select>
+    <update id="setPwd">
+        update teachers set password = #{newPwd} where id=#{id}
+    </update>
+
+    <select id="getAllTeacher" resultType="com.example.tims.entity.Teacher">
+        select * from teachers
+    </select>
+
+    <insert id="add" parameterType="com.example.tims.entity.Teacher">
+        insert into teachers (id, name, gender, educational_background,phone_number)
+        values (#{id}, #{name}, #{gender}, #{educationalBackground},#{phoneNumber})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        delete from teachers where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.example.tims.entity.Teacher">
+        update teachers set name = #{name},gender = #{gender},educational_background=#{educationalBackground},phone_number= #{phoneNumber}
+        where id = #{id}
+    </update>
+
+    <select id="accurateQuire" parameterType="com.example.tims.dto.QueryDto" resultType="com.example.tims.entity.Teacher">
+        select * from teachers where #{fieldName} = #{value}
+    </select>
+
+    <select id="quire" parameterType="com.example.tims.dto.QueryDto" resultType="com.example.tims.entity.Teacher">
+        select id,name,gender,educational_background,phone_number from teachers where #{fieldName} LIKE %#{value}%
+    </select>
+
+    <select id="getTableConfig" parameterType="string" resultType="string">
+        select config_value from table_config where table_target = #{tableTarget}
+    </select>
+
+    <select id="getTeacherById" resultType="com.example.tims.entity.Teacher">
+        select * from teachers where id = #{id}
+    </select>
+
+</mapper>

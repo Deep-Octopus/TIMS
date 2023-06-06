@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.tims.dao.StudentDao">
+    <select id="getPwd" resultType="string">
+        select password from students where id=#{id}
+    </select>
+    <update id="setPwd">
+        update students set password = #{newPwd} where id=#{id}
+    </update>
+    <select id="getClazzByStudentId" resultType="com.example.tims.entity.Clazz" parameterType="string">
+        select * from clazzs where id = #{studentClazzId}
+    </select>
+    <select id="getAllStudent" resultType="com.example.tims.entity.Student">
+        select * from students
+    </select>
+
+    <insert id="add" parameterType="com.example.tims.entity.Student">
+        insert into students (id, name, gender, phone_number)
+        values (#{id}, #{name}, #{gender}, #{phoneNumber})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        delete from students where id = #{id}
+    </delete>
+
+    <delete id="deleteByClazz">
+        delete from students where id LIKE CONCAT(#{clazzId},%)
+    </delete>
+
+    <delete id="multipleDelete">
+        delete from students
+               where id
+                in
+               <foreach collection="ids" item="item" open="(" separator="," close=")">
+                   #{item}
+               </foreach>
+    </delete>
+
+    <update id="update" parameterType="com.example.tims.entity.Student">
+        update students set name = #{name},gender = #{gender},phone_number=#{phoneNumber}
+        where id = #{id}
+    </update>
+
+    <select id="getStudentsByClazz" resultType="com.example.tims.entity.Student">
+        select * from students where id LIKE CONCAT(#{clazzId},'%')
+    </select>
+
+    <select id="accurateQuire" parameterType="map" resultType="com.example.tims.entity.Student">
+        select id,name,gender,phone_number from students where #{fieldName} = #{value}
+    </select>
+
+    <select id="quire" parameterType="map" resultType="com.example.tims.entity.Student">
+        select id,name,gender,phone_number from students where #{fieldName} LIKE %#{value}%
+    </select>
+
+    <select id="getStudentById" resultType="com.example.tims.entity.Student">
+        select * from students where id = #{id}
+    </select>
+
+</mapper>
