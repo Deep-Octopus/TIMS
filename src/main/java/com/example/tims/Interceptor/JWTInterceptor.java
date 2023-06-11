@@ -65,18 +65,4 @@ public class JWTInterceptor implements HandlerInterceptor {
         request.setAttribute("user_type", infoMap.get("user_type"));
         return true;
     }
-
-    //返回错误信息
-    private static void setReturn(HttpServletResponse response, int status, String msg) throws IOException {
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
-        //UTF-8编码
-        httpResponse.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json;charset=utf-8");
-//        return Result.buildErr(status,msg);
-
-        String json = JSON.toJSONString(RestBean.failure(status,msg));
-        httpResponse.getWriter().print(json);
-    }
 }

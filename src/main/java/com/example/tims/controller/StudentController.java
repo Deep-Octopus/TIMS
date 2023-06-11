@@ -1,9 +1,12 @@
 package com.example.tims.controller;
 
 import com.example.tims.dto.MultipleDeleteDto;
+import com.example.tims.dto.QueryDto;
 import com.example.tims.dto.RestBean;
+import com.example.tims.entity.Clazz;
 import com.example.tims.entity.Student;
 import com.example.tims.service.serviceImpl.StudentServiceImpl;
+import com.example.tims.util.LogUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -22,10 +25,6 @@ public class StudentController {
         return studentService.getAllStudent();
     }
 
-//    @PostMapping("/checkClazz")
-//    public RestBean<String> checkClazz(@RequestBody Student student) {
-//        return studentService.checkClazz(student);
-//    }
     @PostMapping(value = "/add")
     public RestBean<String> addStudent(@RequestBody Student student) {
         return studentService.add(student);
@@ -46,11 +45,9 @@ public class StudentController {
     }
 
     @PostMapping("/query")
-    public RestBean<List<Student>> queryStudent(
-            @RequestParam("fieldName") String fieldName,
-            @RequestParam("value") String value,
-            @RequestParam("isAccurate") boolean isAccurate) {
-        return studentService.query(fieldName, value, isAccurate);
+    public RestBean<List<Student>> queryStudent(@RequestBody QueryDto queryDto) {
+        LogUtils.info(queryDto.getFieldName());
+        return studentService.query(queryDto,false);
     }
 
 

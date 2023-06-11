@@ -4,11 +4,10 @@ import com.example.tims.dao.ClazzDao;
 import com.example.tims.dto.ChangePwdDto;
 import com.example.tims.dto.Enum.StatusEnum;
 import com.example.tims.dto.RestBean;
-import com.example.tims.entity.TableConfig;
+import com.example.tims.dto.TableConfigDto;
 import com.example.tims.entity.User;
 import com.example.tims.service.serviceImpl.AuthServiceImpl;
 import com.example.tims.util.LogUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,7 +42,7 @@ public class AuthController {
     }
     @GetMapping("/api/auth/getUserInfo")
     public RestBean<Object> getUserInfo(HttpServletRequest request){
-        return authService.getUserInfo(request.getAttribute("username").toString(),request.getAttribute("user_type").toString());
+        return authService.getUserDetailInfo(request.getAttribute("username").toString(),request.getAttribute("user_type").toString());
     }
     @GetMapping("/api/auth/getTableConfig/{target}")
     public RestBean<String> getTableConfig(@PathVariable String target){
@@ -51,7 +50,7 @@ public class AuthController {
     }
 
     @PostMapping("/api/auth/setTableConfig")
-    public RestBean<String> saveTableConfig(@RequestBody TableConfig tableConfig) {
+    public RestBean<String> saveTableConfig(@RequestBody TableConfigDto tableConfig) {
         try{
             LogUtils.info(tableConfig.getConfigValue());
             if (clazzDao.saveTableConfig(tableConfig.getTableTarget(), tableConfig.getConfigValue()) == 1){

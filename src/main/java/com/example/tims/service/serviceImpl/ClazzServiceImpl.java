@@ -86,6 +86,23 @@ public class ClazzServiceImpl implements EntityService<Clazz> {
         }
     }
 
+    public RestBean<String> multipleDelete(List<String> list) {
+        try {
+            if (clazzDao.multipleDelete(list) != 0) {
+                for (String id : list
+                     ) {
+                    //                删除对应班级的学生
+                    studentDao.deleteByClazz(id);
+                }
+                return RestBean.success();
+            }
+            return RestBean.failure(StatusEnum.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RestBean.failure(StatusEnum.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @Override
     public RestBean<String> update(Clazz clazz) {
 
@@ -101,12 +118,11 @@ public class ClazzServiceImpl implements EntityService<Clazz> {
     }
 
     @Override
-    public RestBean<List<Clazz>> query(String fieldName, String value, boolean isAccurate) {
+    public RestBean<List<Clazz>> query(QueryDto queryDto, boolean isAccurate) {
 
-        SqlUtil.isTableExists(Clazz.class);
+//        SqlUtil.isTableExists(Clazz.class);
 
         try {
-            QueryDto queryDto = new QueryDto(fieldName,value);
             if (isAccurate) {
                 return RestBean.success(clazzDao.accurateQuire(queryDto));
             } else {

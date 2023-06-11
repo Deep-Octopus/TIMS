@@ -106,12 +106,11 @@ public class StudentServiceImpl implements EntityService<Student> {
     }
 
     @Override
-    public RestBean<List<Student>> query(String fieldName, String value, boolean isAccurate) {
+    public RestBean<List<Student>> query(QueryDto queryDto, boolean isAccurate) {
 
-        SqlUtil.isTableExists(Student.class);
+//        SqlUtil.isTableExists(Student.class);
 
         try {
-            QueryDto queryDto = new QueryDto(fieldName, value);
             if (isAccurate) {
                 return RestBean.success(studentDao.accurateQuire(queryDto));
             } else {

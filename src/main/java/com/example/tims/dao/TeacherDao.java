@@ -19,6 +19,8 @@ public interface TeacherDao extends BaseMapper<Teacher> {
 
     int delete(String id);
 
+    int multipleDelete(@Param("ids") List<String> list);
+
     int update(Teacher teacher);
 
     List<Teacher> accurateQuire(QueryDto queryDto);

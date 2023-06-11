@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-    public RestBean<Object> getUserInfo(String username, String user_type) {
+    public RestBean<Object> getUserDetailInfo(String username, String user_type) {
         try {
             if (user_type.equals("teacher")) {
                 Teacher teacher = teacherDao.getTeacherById(username);
@@ -146,7 +146,6 @@ public class AuthServiceImpl implements AuthService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            ;
             return RestBean.failure(StatusEnum.INTERNAL_SERVER_ERROR);
         }
     }
@@ -156,8 +155,4 @@ public class AuthServiceImpl implements AuthService {
         return null;
     }
 
-    @Override
-    public RestBean<Object> changePassword(String username, String password) {
-        return null;
-    }
 }

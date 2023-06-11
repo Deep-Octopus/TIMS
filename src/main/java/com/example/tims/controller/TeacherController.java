@@ -1,8 +1,13 @@
 package com.example.tims.controller;
 
+import com.example.tims.dto.MultipleDeleteDto;
+import com.example.tims.dto.QueryDto;
 import com.example.tims.dto.RestBean;
+import com.example.tims.entity.Clazz;
+import com.example.tims.entity.Student;
 import com.example.tims.entity.Teacher;
 import com.example.tims.service.serviceImpl.TeacherServiceImpl;
+import com.example.tims.util.LogUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -30,8 +35,10 @@ public class TeacherController {
         return teacherService.delete(id);
     }
 
-//    @PostMapping("/multipleDelete")
-//    public RestBean<String> multipleDelete(@)
+    @PostMapping("/multipleDelete")
+    public RestBean<String> multipleDeleteStudent(@RequestBody MultipleDeleteDto multipleDeleteDto){
+        return teacherService.multipleDelete(multipleDeleteDto.getIdList());
+    }
 
     @PostMapping("/update")
     public RestBean<String> updateTeacher(@RequestBody Teacher teacher) {
@@ -39,11 +46,9 @@ public class TeacherController {
     }
 
     @PostMapping("/query")
-    public RestBean<List<Teacher>> queryTeacher(
-            @RequestParam("fieldName") String fieldName,
-            @RequestParam("value") String value,
-            @RequestParam("isAccurate") boolean isAccurate) {
-        return teacherService.query(fieldName, value, isAccurate);
+    public RestBean<List<Teacher>> queryTeacher(@RequestBody QueryDto queryDto) {
+        LogUtils.info(queryDto.getFieldName());
+        return teacherService.query(queryDto,false);
     }
 
     @GetMapping("/getTableConfig/{tableTarget}")

@@ -1,10 +1,13 @@
 package com.example.tims.controller;
 
+import com.example.tims.dto.MultipleDeleteDto;
+import com.example.tims.dto.QueryDto;
 import com.example.tims.dto.RestBean;
 import com.example.tims.entity.Clazz;
 import com.example.tims.entity.Student;
 import com.example.tims.service.serviceImpl.ClazzServiceImpl;
 import com.example.tims.service.serviceImpl.StudentServiceImpl;
+import com.example.tims.util.LogUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -35,6 +38,10 @@ public class ClazzController {
         return clazzService.delete(id);
     }
 
+    @PostMapping("/multipleDelete")
+    public RestBean<String> multipleDeleteStudent(@RequestBody MultipleDeleteDto multipleDeleteDto){
+        return clazzService.multipleDelete(multipleDeleteDto.getIdList());
+    }
     @PostMapping("/update")
     public RestBean<String> updateClazz(@RequestBody Clazz clazz) {
         return clazzService.update(clazz);
@@ -50,10 +57,7 @@ public class ClazzController {
         return clazzService.getClazzByTeacher(teacherId);
     }
     @PostMapping("/query")
-    public RestBean<List<Clazz>> queryClazz(
-            @RequestParam("fieldName") String fieldName,
-            @RequestParam("value") String value,
-            @RequestParam("isAccurate") boolean isAccurate) {
-        return clazzService.query(fieldName, value, isAccurate);
+    public RestBean<List<Clazz>> queryClazz(@RequestBody QueryDto queryDto) {
+        return clazzService.query(queryDto,false);
     }
 }

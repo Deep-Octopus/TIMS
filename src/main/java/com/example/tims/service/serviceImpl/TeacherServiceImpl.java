@@ -63,6 +63,18 @@ public class TeacherServiceImpl implements EntityService<Teacher> {
         }
     }
 
+    public RestBean<String> multipleDelete(List<String> list) {
+        try {
+            if (teacherDao.multipleDelete(list) != 0) {
+                return RestBean.success();
+            }
+            return RestBean.failure(StatusEnum.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RestBean.failure(StatusEnum.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @Override
     public RestBean<String> update(Teacher teacher) {
 
@@ -78,12 +90,11 @@ public class TeacherServiceImpl implements EntityService<Teacher> {
     }
 
     @Override
-    public RestBean<List<Teacher>> query(String fieldName, String value, boolean isAccurate) {
+    public RestBean<List<Teacher>> query(QueryDto queryDto, boolean isAccurate) {
 
-        SqlUtil.isTableExists(Teacher.class);
+//        SqlUtil.isTableExists(Teacher.class);
 
         try {
-            QueryDto queryDto = new QueryDto(fieldName,value);
             if (isAccurate) {
                 return RestBean.success(teacherDao.accurateQuire(queryDto));
             } else {

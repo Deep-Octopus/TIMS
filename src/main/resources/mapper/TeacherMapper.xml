@@ -24,6 +24,15 @@
         delete from teachers where id = #{id}
     </delete>
 
+    <delete id="multipleDelete">
+        delete from teachers
+        where id
+        in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <update id="update" parameterType="com.example.tims.entity.Teacher">
         update teachers set name = #{name},gender = #{gender},educational_background=#{educationalBackground},phone_number= #{phoneNumber}
         where id = #{id}
@@ -34,7 +43,7 @@
     </select>
 
     <select id="quire" parameterType="com.example.tims.dto.QueryDto" resultType="com.example.tims.entity.Teacher">
-        select id,name,gender,educational_background,phone_number from teachers where #{fieldName} LIKE %#{value}%
+        select id,name,gender,educational_background as educationalBackground,phone_number as phoneNumber from teachers where #{fieldName} LIKE CONCAT('%',#{value},'%')
     </select>
 
     <select id="getTableConfig" parameterType="string" resultType="string">

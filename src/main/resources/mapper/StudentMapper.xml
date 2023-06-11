@@ -48,12 +48,12 @@
         select * from students where id LIKE CONCAT(#{clazzId},'%')
     </select>
 
-    <select id="accurateQuire" parameterType="map" resultType="com.example.tims.entity.Student">
-        select id,name,gender,phone_number from students where #{fieldName} = #{value}
+    <select id="accurateQuire" resultType="com.example.tims.entity.Student">
+        select id,name,gender,phone_number as phoneNumber from students where #{fieldName} = #{value}
     </select>
 
-    <select id="quire" parameterType="map" resultType="com.example.tims.entity.Student">
-        select id,name,gender,phone_number from students where #{fieldName} LIKE %#{value}%
+    <select id="quire" resultType="com.example.tims.entity.Student">
+        select id,name,gender,phone_number as phoneNumber from students where id LIKE CONCAT('%',#{value},'%')
     </select>
 
     <select id="getStudentById" resultType="com.example.tims.entity.Student">

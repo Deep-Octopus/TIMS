@@ -25,6 +25,15 @@
         delete from clazzs where id = #{id}
     </delete>
 
+    <delete id="multipleDelete">
+        delete from clazzs
+        where id
+        in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <update id="update" parameterType="com.example.tims.entity.Clazz">
         update students set teacher_id = #{teacherId},department = #{department}
         where id = #{id}
@@ -38,8 +47,8 @@
         select * from clazzs where #{fieldName} = #{value}
     </select>
 
-    <select id="quire" parameterType="map" resultType="com.example.tims.entity.Clazz">
-        select * from clazzs where #{fieldName} LIKE %#{value}%
+    <select id="quire" resultType="com.example.tims.entity.Clazz">
+        select * from clazzs where #{fieldName} LIKE CONCAT('%',#{value},'%')
     </select>
 
 <!--    for table config save-->

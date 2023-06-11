@@ -20,6 +20,8 @@ public interface ClazzDao extends BaseMapper<Clazz> {
 
     int delete(String id);
 
+    int multipleDelete(@Param("ids") List<String> list);
+
     int update(Clazz clazz);
     List<Clazz> getClazzByTeacher(@Param("teacherId")String teacherId);
     List<Clazz> accurateQuire(QueryDto queryDto);

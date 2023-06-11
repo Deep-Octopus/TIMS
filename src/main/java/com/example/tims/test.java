@@ -12,4 +12,5 @@ public class test {
         random.nextBytes(keyBytes);
         System.out.println(Base64.getEncoder().encodeToString(keyBytes));
     }
+
 }
